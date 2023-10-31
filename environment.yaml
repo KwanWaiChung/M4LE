@@ -1,0 +1,22 @@
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.10
+  - pytorch==1.13.1
+  - torchvision==0.14.1
+  - torchaudio==0.13.1
+  - pytorch-cuda=11.6
+  - openai
+  - transformers[version='>=4.33']
+  - accelerate
+  - jieba
+  - sentencepiece
+  - pip
+  - pip:
+    - rouge==1.0.1
+    - rouge-chinese==1.0.3
+    - strictfire==0.4.1
+    - termcolor==2.3.0
