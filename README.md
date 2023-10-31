@@ -123,7 +123,7 @@ for task in tasks:
 ```
 
 Each testing instance follows this format:
-```json
+```yaml
 {
     "instruction": "<task description>",
     "input": "<task input with one-shot example>",
