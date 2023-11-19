@@ -1,10 +1,10 @@
 # M4LE: A Multi-Ability Multi-Range Multi-Task Multi-Domain Long-Context Evaluation Benchmark for Large Language Models
 
-## Update 📢
+## 📢 Update 
 
 **[2023/10/31]** We released the [M4LE paper](https://arxiv.org/abs/2310.19240).
 
-## Content 📚
+## 📚 Content 
 
 1. [Introduction](#introduction)
 2. [Leaderboard](#leaderboard)
@@ -16,7 +16,7 @@
 8. [Evaluation](#evaluation)
 9. [Citation](#citation)
 
-## Introduction 📘
+## 📘 Introduction 
 
 ![](figures/m4.png)
 **M4LE** is a **M**ulti-ability, **M**ulti-range, **M**ulti-task, bilingual benchmark for long-context evaluation.
@@ -35,7 +35,7 @@ M4LE consists of 36 tasks, covering 11 task types and 12 domains. For each task,
 </div>
 
 
-## Leaderboard 🏆
+## 🏆 Leaderboard 
 For each task, the score is normalized by the score of GPT-3.5-Turbo-16K on the 1K context. The equation for normalization can be found in the paper.
 We use the average normalized score obtained from context length buckets of 1K, 2K, 4K, 6K, and 8K to compare different models.
 
@@ -53,7 +53,7 @@ We use the average normalized score obtained from context length buckets of 1K, 
 | LLaMA2-7B-Chat       |  0.41  |  0.34  |  0.25  |  0.13  |  0.11  |      0.25      |
 | LLaMA2-7B            |  0.39  |  0.33  |  0.25  |  0.13  |  0.07  |      0.23      |
 
-## Results 📊
+## 📊 Results 
 <!-- ![](figures/main_res.png) -->
 <div align="center">
     <img src="figures/main_res.png"/>
@@ -61,7 +61,7 @@ We use the average normalized score obtained from context length buckets of 1K, 
     <figcaption>The normalized scores of various models in different context lengths (left), accompanied by the slopes of the corresponding best-fit lines (right).</figcaption>
 </div>
 
-## Setup 🛠️
+## 🛠️ Setup 
 
 The following command setup a conda environment for inference and evaluation.
 
@@ -69,7 +69,7 @@ The following command setup a conda environment for inference and evaluation.
 conda env create --name m4le --file environment.yml
 ```
 
-## Data 🗂️
+## 🗂️ Data 
 
 As described in the paper, we adopt different open-sourced datasets to construct 36 tasks in M4LE. 
 Each task has a `jsonl` file containing all the testing instances.
@@ -133,7 +133,7 @@ Each testing instance follows this format:
     "length_bucket": <int, the length bucket to which this instance belongs>
 }
 ```
-## Task 📝
+## 📝 Task 
 | Ability             | Task Name                                 | Task Type  | Language | Description                                                            |
 |---------------------|-------------------------------------------|------------|----------|------------------------------------------------------------------------|
 | Explicit Single     | mnds-news_explicit-single                 | CLS + RET  | En       | Classify a specified news article.                                      |
@@ -175,19 +175,19 @@ Each testing instance follows this format:
 
 
 
-## Inference 🧠
+## 🧠 Inference 
 In the paper, we use the prompt format `f"{instruction}\n{input}"`. 
 We recommend to edit or use our `inference.py` code.  To run the code, provide the HuggingFace model name and task name:
 ```bash
 python inference.py \
---model lmsys/vicuna-13b-v1.5-16k \
+--model_path lmsys/vicuna-13b-v1.5-16k \
 --task nq-open
 ```
 
 For LLaMA2 models, we recommend enabling dynamic NTK scaling:
 ```bash
 python inference.py \
---model meta-llama/Llama-2-7b \
+--model_path meta-llama/Llama-2-7b \
 --task nq-open \
 --load_model_args '{"rope_scaling": {"type": "dynamic", "factor": 2.0}}' 
 ```
@@ -197,7 +197,7 @@ Additional arguments:
 
 The predictions will be saved at `outputs/{model}/{task}.jsonl`
 
-## Evaluation 📈
+## 📈 Evaluation 
 Run the following script to evaluate:
 ```bash
 python evaluation.py 
@@ -209,7 +209,7 @@ It will evaluate all the models saved at `outputs/{model}/`. The results will be
 - `Score`: The evaluation score.
 
 
-## Citation 📄
+## 📄 Citation 
 
 If you find our paper and resources useful, please consider citing our paper:
 ```bibtex
