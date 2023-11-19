@@ -143,9 +143,7 @@ def main(
             trust_remote_code=True,
             **load_model_args,
         )
-        tokenizer = AutoTokenizer.from_pretrained(
-            model_path, trust_remote_code=True
-        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         tokenizer.padding_side = "left"
         try:
             tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -162,12 +160,8 @@ def main(
         matched = 0
         for row in out_data:
             for ori_row in data:
-                if (
-                    ori_row["dialog_id"] == row["dialog_id"]
-                    and ori_row["turn_i"] == row["turn_i"]
-                    and "gen_resp" in row
-                ):
-                    ori_row["gen_resp"] = row["gen_resp"]
+                if output_key in row:
+                    ori_row[output_key] = row[output_key]
                     matched += 1
                     break
         logger.info(f"Resumed {matched} instances from {out_filename}.")
@@ -239,9 +233,7 @@ def main(
         if i % 10 == 0:
             with open(out_filename, "w", encoding="utf-8") as f:
                 f.write(
-                    "\n".join(
-                        [json.dumps(row, ensure_ascii=False) for row in data]
-                    )
+                    "\n".join([json.dumps(row, ensure_ascii=False) for row in data])
                 )
             logger.debug(
                 f"Ran {i+1}/{len(data)}."
@@ -249,9 +241,7 @@ def main(
                 f" Saved to {out_filename}"
             )
     with open(out_filename, "w", encoding="utf-8") as f:
-        f.write(
-            "\n".join([json.dumps(row, ensure_ascii=False) for row in data])
-        )
+        f.write("\n".join([json.dumps(row, ensure_ascii=False) for row in data]))
     logger.info(f"Finished running. Output saved in {out_filename}.")
 
 
