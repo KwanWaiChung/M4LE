@@ -6,15 +6,15 @@
 
 ## 📚 Content
 
-1. [Introduction](#introduction)
-2. [Leaderboard](#leaderboard)
-3. [Results](#results)
-4. [Setup](#setup)
-5. [Data](#data)
-6. [Task](#task)
-7. [Inference](#inference)
-8. [Evaluation](#evaluation)
-9. [Citation](#citation)
+1. [Introduction](#-introduction)
+2. [Leaderboard](#-leaderboard)
+3. [Results](#-results)
+4. [Setup](#-setup)
+5. [Data](#-data)
+6. [Task](#-task)
+7. [Inference](#-inference)
+8. [Evaluation](#-evaluation)
+9. [Citation](#-citation)
 
 ## 📘 Introduction
 
