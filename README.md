@@ -2,6 +2,7 @@
 
 ## 📢 Update
 
+**[2024/05/16]** Our paper is accepted to ACL 2024 main.  
 **[2023/10/31]** We released the [M4LE paper](https://arxiv.org/abs/2310.19240).
 
 ## 📚 Content
@@ -9,8 +10,8 @@
 1. [Introduction](#-introduction)
 2. [Leaderboard](#-leaderboard)
 3. [Results](#-results)
-4. [Setup](#-setup)
-5. [Data](#-data)
+4. [Setup](#️-setup)
+5. [Data](#️-data)
 6. [Task](#-task)
 7. [Inference](#-inference)
 8. [Evaluation](#-evaluation)
@@ -18,7 +19,7 @@
 
 ## 📘 Introduction
 
-![](figures/m4.png) **M4LE** is a **M**ulti-ability, **M**ulti-range, **M**ulti-task, bilingual benchmark for long-context evaluation. We categorize long-context understanding into five distinct abilities by considering whether it is required to identify single or multiple spans in long contexts based on explicit or semantic hints. Specifically, these abilities are explicit single-span, semantic single-span, explicit multiple-span, semantic multiple-span, and global. Different from previous long-context benchmark that simply compile from a set of existing long NLP benchmarks, we introduce an automated method to transform short-sequence tasks into a comprehensive long-sequence scenario encompassing all these capabilities.
+![](figures/m4.png) **M4LE** is a **M**ulti-ability, **M**ulti-range, **M**ulti-task, bilingual benchmark for long-context evaluation. We categorize long-context understanding into five distinct abilities by considering whether it is required to identify single or multiple spans in long contexts based on explicit or semantic hints. Specifically, these abilities are explicit single-span, semantic single-span, explicit multiple-span, semantic multiple-span, and global. Different from previous long-context benchmarks that simply compile from a set of existing long NLP benchmarks, we introduce an automated method to transform short-sequence tasks into a comprehensive long-sequence scenario encompassing all these capabilities.
 
 M4LE consists of 36 tasks, covering 11 task types and 12 domains. For each task, we construct 200 instances for each context length bucket (1K, 2K, 4K, 6K, 8K, 12K, 16K, 24K, 32K). Due to computation and cost constraints, our paper evaluated 11 well-established LLMs on instances up to the 8K context length bucket. For more details, please refer to the paper.
 
@@ -52,7 +53,7 @@ LLaMA2-7B            |  0.39  |  0.33  |  0.25  |  0.13  |  0.07  |      0.23
 
 ## 🛠️ Setup
 
-The following command setup a conda environment for inference and evaluation.
+The following command sets up a conda environment for inference and evaluation.
 
 ```bash
 conda env create --name m4le --file environment.yml
