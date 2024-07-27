@@ -1,23 +1,47 @@
 # M4LE: A Multi-Ability Multi-Range Multi-Task Multi-Domain Long-Context Evaluation Benchmark for Large Language Models
 
+<div align="center"><img src="https://img.shields.io/badge/Data%20License-MIT-blue" alt="">
+  <img src="https://img.shields.io/badge/Code%20License-MIT-green" alt="">
+  <img src="https://img.shields.io/badge/python-3.10+-red" alt="">
+
+<br>
+<a href="https://arxiv.org/abs/2310.19240">
+  <strong>📃 Paper</strong>
+</a>
+• <a href="https://huggingface.co/datasets/wckwan/M4LE">
+  <strong>🤗 Dataset</strong>
+</a></div>
+
+--------------------------------------------------------------------------------
+
 ## 📢 Update
 
+**[2024/07/27]** We released the dataset that supports up to 128K. We also released the code for constructing the test instances. See [5.2\. Data Creation](#data_creation) for more details.  
 **[2024/05/16]** Our paper is accepted to ACL 2024 main.  
 **[2023/10/31]** We released the [M4LE paper](https://arxiv.org/abs/2310.19240).
 
+--------------------------------------------------------------------------------
+<span id="content"></span>
+
 ## 📚 Content
 
-1. [Introduction](#-introduction)
-2. [Leaderboard](#-leaderboard)
-3. [Results](#-results)
-4. [Setup](#️-setup)
-5. [Data](#️-data)
-6. [Task](#-task)
-7. [Inference](#-inference)
-8. [Evaluation](#-evaluation)
-9. [Citation](#-citation)
+- [1\. Introduction](#introduction)
+- [2\. Leaderboard](#leaderboard)
+- [3\. Results](#results)
+- [4\. Setup](#setup)
+- [5\. Data](#data)
+    - [5.1\. Load Data](#load_data)
+    - [5.2\. Data Creation](#data_creation)
+- [6\. Task](#task)
+- [7\. Inference](#inference)
+- [8\. Evaluation](#evaluation)
+- [Citation](#citation)
 
-## 📘 Introduction
+--------------------------------------------------------------------------------
+
+<span id="introduction"></span>
+
+## 📘 1\. Introduction [[Back to Top]](#content)
 
 ![](figures/m4.png) **M4LE** is a **M**ulti-ability, **M**ulti-range, **M**ulti-task, bilingual benchmark for long-context evaluation. We categorize long-context understanding into five distinct abilities by considering whether it is required to identify single or multiple spans in long contexts based on explicit or semantic hints. Specifically, these abilities are explicit single-span, semantic single-span, explicit multiple-span, semantic multiple-span, and global. Different from previous long-context benchmarks that simply compile from a set of existing long NLP benchmarks, we introduce an automated method to transform short-sequence tasks into a comprehensive long-sequence scenario encompassing all these capabilities.
 
@@ -26,7 +50,11 @@ M4LE consists of 36 tasks, covering 11 task types and 12 domains. For each task,
 <div align="center"><img src="figures/comparison.png" width="70%">
     <br><figcaption>This figure compres M4LE with existing long-context benchmarks. </figcaption></div>
 
-## 🏆 Leaderboard
+--------------------------------------------------------------------------------
+
+<span id="leaderboard"></span>
+
+## 🏆 2\. Leaderboard [[Back to Top]](#content)
 
 For each task, the score is normalized by the score of GPT-3.5-Turbo-16K on the 1K context. The equation for normalization can be found in the paper. We use the average normalized score obtained from context length buckets of 1K, 2K, 4K, 6K, and 8K to compare different models.
 
@@ -44,14 +72,22 @@ ChatGLM2-6B          |  0.40  |  0.33  |  0.25  |  0.21  |  0.17  |      0.27
 LLaMA2-7B-Chat       |  0.41  |  0.34  |  0.25  |  0.13  |  0.11  |      0.25
 LLaMA2-7B            |  0.39  |  0.33  |  0.25  |  0.13  |  0.07  |      0.23
 
-## 📊 Results 
+--------------------------------------------------------------------------------
+
+<span id="results"></span>
+
+## 📊 3\. Results [[Back to Top]](#content) 
 
 <!-- ![](figures/main_res.png) -->
 
  <div align="center"><img src="figures/main_res.png">
     <br><figcaption>The normalized scores of various models in different context lengths (left), accompanied by the slopes of the corresponding best-fit lines (right).</figcaption></div>
 
-## 🛠️ Setup
+--------------------------------------------------------------------------------
+
+<span id="setup"></span>
+
+## 🛠 4\.️ Setup [[Back to Top]](#content)
 
 The following command sets up a conda environment for inference and evaluation.
 
@@ -59,7 +95,15 @@ The following command sets up a conda environment for inference and evaluation.
 conda env create --name m4le --file environment.yml
 ```
 
-## 🗂️ Data
+--------------------------------------------------------------------------------
+
+<span id="data"></span>
+
+## 🗂️ 5\. Data [[Back to Top]](#content)
+
+<span id="load_data"></span>
+
+### 5.1\. Load Data
 
 As described in the paper, we adopt different open-sourced datasets to construct 36 tasks in M4LE. Each task has a `jsonl` file containing all the testing instances. You can load the data from the [huggingface hub](https://huggingface.co/datasets/wckwan/M4LE):
 
@@ -124,7 +168,117 @@ Each testing instance follows this format:
 }
 ```
 
-## 📝 Task
+<span id="data_creation"></span>
+
+### 5.2\. Data Creation
+
+We also provide the scripts to construct the instances from the raw datasets.  
+First, download and preprocess the data. It downloads many source datasets which takes lots of time and space. It is possible to encounter network errors during the download process where you have to edit the script to resume where you left off.
+```bash
+./raw_data/preprocess.sh
+```
+
+<details>
+<summary>If the preprocessing script is successful, you should have the following folder structure</summary>
+
+```
+raw_data/
+├── classification/
+│   ├── THUCNews/
+│   ├── arxiv-dataset/
+│   ├── marc/
+│   └── online_shopping_10_cats/
+├── nli/
+│   ├── wiki_zh/
+│   └── wikitext-2-raw/
+├── qa/
+│   ├── DRCD/
+│   ├── __MACOSX/
+│   │   └── newsqa-data-v1/
+│   ├── c3/
+│   ├── duorc/
+│   │   ├── dataset/
+│   │   └── preprocessing/
+│   │       ├── data/
+│   │       └── utils/
+│   ├── dureader/
+│   │   ├── devset/
+│   │   ├── evaluation_metric/
+│   │   ├── testset/
+│   │   └── trainset/
+│   ├── hotpotqa/
+│   ├── natural_questions/
+│   ├── newsqa/
+│   │   └── stories/
+│   └── triviaqa/
+│       ├── evidence/
+│       │   ├── web/
+│       │   └── wikipedia/
+│       ├── qa/
+│       └── triviaqa-unfiltered/
+├── summarization/
+│   ├── CEPSUM/
+│   ├── CNewSum_v2/
+│   │   └── final/
+│   ├── NCLS-Data/
+│   │   ├── EN2ZHSUM/
+│   │   └── ZH2ENSUM/
+│   ├── QMSum/
+│   │   ├── data/
+│   │   │   ├── ALL/
+│   │   │   ├── Academic/
+│   │   │   ├── Committee/
+│   │   │   └── Product/
+│   │   ├── extracted_span/
+│   │   ├── figures/
+│   │   └── model_output/
+│   ├── arxiv-dataset/
+│   ├── bigPatentData/
+│   │   ├── test/
+│   │   ├── train/
+│   │   └── val/
+│   ├── clts/
+│   ├── cnn/
+│   │   └── stories/
+│   ├── gov-report/
+│   │   ├── crs/
+│   │   ├── gao/
+│   │   └── split_ids/
+│   ├── lcsts/
+│   ├── news2016zh/
+│   ├── pubmed-dataset/
+│   └── wikihow/
+├── translation/
+│   ├── News-Commentary_v16/
+│   │   ├── en/
+│   │   │   └── News-Commentary/
+│   │   │       └── xml/
+│   │   │           └── en/
+│   │   └── zh/
+│   │       └── News-Commentary/
+│   │           └── xml/
+│   │               └── zh/
+│   ├── opensubtitles/
+│   │   └── OpenSubtitles/
+│   │       └── xml/
+│   │           ├── en/
+│   │           ├── zh_cn/
+│   └── tedtalk/
+└── wow/
+```
+</details>
+
+
+Construct the test instances with the following script. To customize the length buckets, edit the variable `buckets` in `create_data.sh`
+```bash
+./data/create_data.sh
+```
+
+--------------------------------------------------------------------------------
+
+<span id="task"></span>
+
+## 📝 6\. Task [[Back to Top]](#content)
 
 Ability           | Task Name                                   | Task Type  | Language | Description
 ----------------- | ------------------------------------------- | ---------- | -------- | ------------------------------------------------------------------
@@ -165,9 +319,13 @@ Global            | clts+                                       | SUM        | Z
 Global            | open-subtitles-en2zh/open-subtitles-zh2en   | TRAN       | En, Zh   | Translate the movie subtitles.
 Global            | news-commentary-en2zh/news-commentary-zh2en | TRAN       | En, Zh   | Translate the movie subtitles.
 
-## 🧠 Inference
+--------------------------------------------------------------------------------
 
-In the paper, we use the prompt format `f"{instruction}\n{input}"`. We recommend to edit or use our `inference.py` code. To run the code, provide the HuggingFace model name and task name:
+<span id="inference"></span>
+
+## 🧠 7\. Inference [[Back to Top]](#content)
+
+In the paper, we use the prompt format `f"{instruction}\n{input}"`. We recommend editing or using our `inference.py`` code. To run the code, provide the HuggingFace model name and task name:
 
 ```bash
 python inference.py \
@@ -186,12 +344,16 @@ python inference.py \
 
 Additional arguments:
 
-- `--resume`: specify if you wish to pick up from where you left off.
+- `--resume`: Specify if you wish to pick up from where you left off.
 - `--api_key`: The OpenAI key if you are using OpenAI models.
 
 The predictions will be saved at `outputs/{model}/{task}.jsonl`
 
-## 📈 Evaluation
+--------------------------------------------------------------------------------
+
+<span id="evaluation"></span>
+
+## 📈 8\. Evaluation [[Back to Top]](#content)
 
 Run the following script to evaluate:
 
@@ -205,6 +367,11 @@ It will evaluate all the models saved at `outputs/{model}/`. The results will be
 - `Task`: Task Name.
 - `Bucket`: The context length bucket.
 - `Score`: The evaluation score.
+
+--------------------------------------------------------------------------------
+
+<span id="citation"></span>
+
 
 ## 📄 Citation
 

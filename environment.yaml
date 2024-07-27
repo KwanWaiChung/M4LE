@@ -1,22 +1,43 @@
 channels:
+  - conda-forge
+  - anaconda
+  - defaults
   - pytorch
   - nvidia
-  - conda-forge
   - nodefaults
 dependencies:
   - python=3.10
+  - black=22.6.0
+  - flake8=6.0.0
+  - tqdm=4.65.0  
+  - pydantic==1.9.0
+  - gdown=4.7.1
+  - gsutil=5.25
+  - google-auth==2.22.0
+  - pyyaml==6.0
+  - nltk==3.6.2
+  - unidecode==1.3.6
+  - numpy==1.25.0
+  - word2number==1.1
+  - spacy==3.5.3
+  - spacy-model-en_core_web_lg==3.5.0
+  - matplotlib==3.7.1
+  - matching==1.4
+  - sentence-transformers==2.2.2
   - pytorch==1.13.1
   - torchvision==0.14.1
   - torchaudio==0.13.1
   - pytorch-cuda=11.6
-  - openai
-  - transformers[version='>=4.33']
-  - accelerate
+  - tabulate
   - jieba
   - sentencepiece
   - pip
+  - openai
+  - transformers[version='>=4.33']
+  - accelerate
   - pip:
+    - strictfire==0.4.1
+    - xopen==1.7.0
     - rouge==1.0.1
     - rouge-chinese==1.0.3
-    - strictfire==0.4.1
     - termcolor==2.3.0
